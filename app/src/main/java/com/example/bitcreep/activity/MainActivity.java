@@ -1,4 +1,5 @@
-package com.example.bitcreep;
+package com.example.bitcreep.activity;
+
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
@@ -17,6 +18,8 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.List;
 
+
+import com.example.bitcreep.R;
 
 public class MainActivity extends AppCompatActivity {
     private static final String TAG = "chapter5";
