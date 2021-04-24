@@ -3,6 +3,7 @@ package com.example.bitcreep.utils;
 import okhttp3.MultipartBody;
 import retrofit2.Call;
 import retrofit2.http.Body;
+import retrofit2.http.GET;
 import retrofit2.http.Header;
 import retrofit2.http.Multipart;
 import retrofit2.http.POST;
@@ -17,5 +18,11 @@ public interface IApi {
             @Query("user_name") String userName,
             @Query("extra_value") String extraValue,
             @Part MultipartBody.Part coverImage,
-            @Part MultipartBody.Part video);
+            @Part MultipartBody.Part video
+    );
+
+    @GET("video")
+    Call<MessageListResponse> getVideos(
+            @Query("student_id") String studentId
+    );
 }
