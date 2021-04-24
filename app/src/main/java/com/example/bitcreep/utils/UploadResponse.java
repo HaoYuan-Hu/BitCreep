@@ -1,5 +1,10 @@
 package com.example.bitcreep.utils;
 
-public class UploadResponse {
+import com.google.gson.annotations.SerializedName;
 
+public class UploadResponse {
+    @SerializedName("result")
+    public Message message;
+    @SerializedName("success")
+    public boolean success;
 }
