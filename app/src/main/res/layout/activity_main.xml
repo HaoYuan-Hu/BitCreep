@@ -31,7 +31,7 @@
                 android:layout_width="100dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
-                android:text="上传视频"
+                android:text="录制视频"
                 android:background="@color/black"
                 android:textColor="@color/white"
                 />
