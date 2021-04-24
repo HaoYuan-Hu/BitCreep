@@ -26,13 +26,43 @@
             android:layout_width="0dp"
             android:layout_height="match_parent"
             android:layout_weight="1">
-
+            <Button
+                android:id="@+id/camera_button"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:text="上传视频"
+                android:background="@color/black"
+                android:textColor="@color/white"
+                />
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
             <Button
                 android:id="@+id/upload_button"
                 android:layout_width="100dp"
                 android:layout_height="48dp"
                 android:layout_gravity="center"
                 android:text="上传视频"
+                android:background="@color/black"
+                android:textColor="@color/white"
+                />
+        </FrameLayout>
+        <FrameLayout
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1">
+
+            <Button
+                android:id="@+id/search_button"
+                android:layout_width="100dp"
+                android:layout_height="48dp"
+                android:layout_gravity="center"
+                android:text="Id搜索"
+                android:background="@color/black"
+                android:textColor="@color/white"
                 />
         </FrameLayout>
     </LinearLayout>

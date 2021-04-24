@@ -7,6 +7,10 @@ import android.widget.TextView;
 
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
+import com.facebook.drawee.view.SimpleDraweeView;
+
+import com.example.bitcreep.utils.Message;
+import com.example.bitcreep.R;
 
 import java.util.List;
 
@@ -34,23 +38,17 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.VideoViewHolde
         return data==null?0:data.size();
     }
 
-    public static class VideoViewHolder extends RecyclerView.ViewHolder{
-        private SimpleDraweeView coverSD;
-        private TextView fromTV;
-        private TextView toTV;
-        private TextView contentTV;
+    public static class VideoViewHolder extends RecyclerView.ViewHolder {
+        private SimpleDraweeView videoCoverSD;
+        private TextView userNameTV;
         public VideoViewHolder(@NonNull View itemView) {
             super(itemView);
-            fromTV = itemView.findViewById(R.id.tv_from);
-            toTV = itemView.findViewById(R.id.tv_to);
-            contentTV = itemView.findViewById(R.id.tv_content);
-            coverSD = itemView.findViewById(R.id.sd_cover);
+            userNameTV = itemView.findViewById(R.id.video_from);
+            videoCoverSD = itemView.findViewById(R.id.video_cover);
         }
         public void bind(Message message){
-            coverSD.setImageURI(message.getImageUrl());
-            fromTV.setText("FROM: "+message.getFrom());
-            contentTV.setText(message.getContent());
-            toTV.setText("TO: "+message.getTo());
+            videoCoverSD.setImageURI(message.getImageUrl());
+            userNameTV.setText("FROM: "+message.getUserName());
         }
     }
 

@@ -18,6 +18,4 @@ public interface IApi {
             @Query("extra_value") String extraValue,
             @Part MultipartBody.Part coverImage,
             @Part MultipartBody.Part video);
-
-
 }
