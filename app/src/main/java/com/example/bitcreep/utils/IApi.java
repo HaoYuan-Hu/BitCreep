@@ -25,5 +25,4 @@ public interface IApi {
     Call<MessageListResponse> getVideos(
             @Query("student_id") String studentId
     );
-
 }
