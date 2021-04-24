@@ -1,12 +1,4 @@
 <?xml version="1.0" encoding="utf-8"?>
-<!--<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"-->
-<!--    xmlns:app="http://schemas.android.com/apk/res-auto"-->
-<!--    xmlns:tools="http://schemas.android.com/tools"-->
-<!--    android:layout_width="match_parent"-->
-<!--    android:layout_height="match_parent"-->
-<!--    tools:context=".activity.VideoActivity">-->
-
-<!--</androidx.constraintlayout.widget.ConstraintLayout>-->
 
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
@@ -15,21 +7,14 @@
 
     <VideoView
         android:id="@+id/videoView"
-        android:layout_width="match_parent"
-        android:layout_height="613dp"
+        android:layout_width="fill_parent"
+        android:layout_height="541dp"
         android:layout_weight="1" />
 
-    <Button
-        android:id="@+id/buttonPlay"
+    <com.example.bitcreep.activity.FullScreenVideoView
+        android:id="@+id/fVideoView"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Play" />
-
-    <Button
-        android:id="@+id/buttonPause"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1"
-        android:text="Pause" />
+        android:layout_centerVertical="true"
+        android:layout_centerHorizontal="true"/>
 </LinearLayout>
