@@ -23,7 +23,7 @@ import com.example.bitcreep.R;
 import com.example.bitcreep.components.FeedAdapter;
 
 public class MainActivity extends AppCompatActivity {
-    private static final String TAG = "chapter5";
+    private static final String TAG = "MainActivity";
     private FeedAdapter adapter = new FeedAdapter();
 
 

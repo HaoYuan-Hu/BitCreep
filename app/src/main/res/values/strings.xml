@@ -3,5 +3,6 @@
     <string name="choose_cover">选择封面</string>
     <string name="submit">提交</string>
     <string name="choose_video">选择视频</string>
-    <string name="record">开始录制</string>
+    <string name="record">录制</string>
+    <string name="take_photo">拍照</string>
 </resources>
