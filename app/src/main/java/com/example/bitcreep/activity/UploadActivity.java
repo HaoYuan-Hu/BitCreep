@@ -35,6 +35,7 @@ public class UploadActivity extends AppCompatActivity {
     private static final long MAX_FILE_SIZE = 2 * 1024 * 1024;
     private static final int REQUEST_CODE_COVER_IMAGE = 101;
     private static final String COVER_IMAGE_TYPE = "image/*";
+
     private IApi api;
     private Uri coverImageUri;
     private SimpleDraweeView coverSD;

@@ -21,5 +21,7 @@ public class FullScreenVideoView extends VideoView {
         int width = getDefaultSize(0, widthMeasureSpec);
         int height = getDefaultSize(0, heightMeasureSpec);
         setMeasuredDimension(width, height);
+//        setMeasuredDimension(widthMeasureSpec, heightMeasureSpec);
+
     }
 }
