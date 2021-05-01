@@ -1,6 +1,7 @@
 package com.example.bitcreep.activity;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -9,8 +10,13 @@ import android.graphics.ImageFormat;
 import android.hardware.Camera;
 import android.media.CamcorderProfile;
 import android.media.MediaRecorder;
+import android.media.MediaScannerConnection;
+import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.Environment;
+import android.provider.MediaStore;
+import android.util.Log;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 import android.view.View;
@@ -19,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.VideoView;
 
 import java.io.File;
+import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -28,13 +35,17 @@ import com.example.bitcreep.utils.PathUtils;
 
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
-    private SurfaceView mSurfaceView;
+    private static final String TAG = "CameraActivity";
+
     private Camera mCamera;
     private MediaRecorder mMediaRecorder;
     private SurfaceHolder mHolder;
+
     private ImageView mImageView;
     private VideoView mVideoView;
+
     private Button mRecordButton;
+
     private boolean isRecording = false;
 
     private String mp4Path = "";
@@ -48,7 +59,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        mSurfaceView = findViewById(R.id.surfaceview);
+        SurfaceView mSurfaceView = findViewById(R.id.surfaceview);
         mImageView = findViewById(R.id.iv_img);
         mVideoView = findViewById(R.id.videoview);
         mRecordButton = findViewById(R.id.bt_record);
@@ -77,7 +88,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         mMediaRecorder.setCamera(mCamera);
 
         // Step 2: Set sources
-        // todo
         mMediaRecorder.setAudioSource(MediaRecorder.AudioSource.CAMCORDER);
         mMediaRecorder.setVideoSource(MediaRecorder.VideoSource.CAMERA);
 
@@ -86,6 +96,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
         // Step 4: Set output file
         mp4Path = getOutputMediaPath();
+        Log.w(TAG, "prepareVideoRecorder: "+mp4Path);
         mMediaRecorder.setOutputFile(mp4Path);
 
         // Step 5: Set the preview output
@@ -106,7 +117,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
     }
 
     private void releaseMediaRecorder() {
-        // todo
         if (mMediaRecorder != null) {
             mMediaRecorder.reset();   // clear recorder configuration
             mMediaRecorder.release(); // release the recorder object
@@ -122,7 +132,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         if (!mediaFile.exists()) {
             mediaFile.getParentFile().mkdirs();
         }
-        return mediaFile.getAbsolutePath();
+//        return mediaFile.getAbsolutePath();
+        return "/storage/emulated/0/Pictures/VIDEO_"+timeStamp+".mp4";
+
     }
 
     public void takePhoto(View view) {
@@ -134,7 +146,9 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         @Override
         public void onPictureTaken(byte[] data, Camera camera) {
             FileOutputStream fos = null;
-            String filePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + "1.jpg";
+//            String filePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + "1.jpg";
+            String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
+            String filePath = "/storage/emulated/0/Pictures/IMG_"+timeStamp+".jpg";
             File file = new File(filePath);
             try {
                 fos = new FileOutputStream(file);
@@ -163,6 +177,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     public void record(View view) {
         if (isRecording) {
+            Log.w(TAG, "record: "+mp4Path );
             mRecordButton.setText("录制");
 
             mMediaRecorder.setOnErrorListener(null);
@@ -195,7 +210,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     @Override
     public void surfaceCreated(SurfaceHolder holder) {
-        // todo
         try {
             mCamera.setPreviewDisplay(holder);
             mCamera.startPreview();
@@ -222,7 +236,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     @Override
     public void surfaceDestroyed(SurfaceHolder holder) {
-        // todo
         mCamera.stopPreview();
         mCamera.release();
         mCamera = null;
@@ -242,4 +255,6 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
         super.onPause();
         mCamera.stopPreview();
     }
+
+
 }

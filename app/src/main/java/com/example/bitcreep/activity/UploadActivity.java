@@ -74,8 +74,7 @@ public class UploadActivity extends AppCompatActivity {
         findViewById(R.id.btn_video).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Video.Media.EXTERNAL_CONTENT_URI);
-                startActivityForResult(i, REQUEST_CODE_VIDEO);
+                getFile(REQUEST_CODE_VIDEO, COVER_IMAGE_TYPE, "选择视频");
             }
         });
 
@@ -101,7 +100,6 @@ public class UploadActivity extends AppCompatActivity {
         else if(REQUEST_CODE_VIDEO == requestCode)
         {
             if (resultCode == Activity.RESULT_OK) {
-                // todo
                 videoUri = data.getData();
                 videoSD.setVideoURI(videoUri);
                 videoSD.start();
@@ -130,7 +128,7 @@ public class UploadActivity extends AppCompatActivity {
 
     private void getFile(int requestCode, String type, String title) {
         Intent intent = new Intent(Intent.ACTION_GET_CONTENT);
-        intent.setType(type);
+        intent.setType("*/*");
         intent.putExtra(Intent.EXTRA_ALLOW_MULTIPLE, false);
         intent.putExtra(Intent.EXTRA_TITLE, title);
         intent.addCategory(Intent.CATEGORY_OPENABLE);
@@ -194,7 +192,9 @@ public class UploadActivity extends AppCompatActivity {
                     runOnUiThread(new Runnable() {
                         @Override
                         public void run() {
-                            finish();
+                            //todo
+                            //finish();
+                            Toast.makeText(UploadActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
                         }
                     });
                 }
