@@ -11,6 +11,7 @@ import retrofit2.http.Part;
 import retrofit2.http.Query;
 
 public interface IApi {
+
     @Multipart
     @POST("video")
     Call<UploadResponse> uploadVideo(

@@ -1,5 +1,4 @@
 package com.example.bitcreep.activity;
-
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
@@ -18,17 +17,18 @@ import android.view.View;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.VideoView;
-import com.example.bitcreep.R;
-import com.example.bitcreep.utils.PathUtils;
 
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import com.example.bitcreep.R;
+import com.example.bitcreep.utils.PathUtils;
 
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
 
+    private SurfaceView mSurfaceView;
     private Camera mCamera;
     private MediaRecorder mMediaRecorder;
     private SurfaceHolder mHolder;
@@ -39,13 +39,16 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
 
     private String mp4Path = "";
 
+    public static void startUI(Context context) {
+        Intent intent = new Intent(context, CameraActivity.class);
+        context.startActivity(intent);
+    }
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
-
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_camera);
-        SurfaceView mSurfaceView = findViewById(R.id.surfaceview);
-
+        mSurfaceView = findViewById(R.id.surfaceview);
         mImageView = findViewById(R.id.iv_img);
         mVideoView = findViewById(R.id.videoview);
         mRecordButton = findViewById(R.id.bt_record);
@@ -183,7 +186,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             mVideoView.start();
         } else {
             if(prepareVideoRecorder()) {
-                mRecordButton.setText("停止");
+                mRecordButton.setText("暂停");
                 mMediaRecorder.start();
             }
         }
