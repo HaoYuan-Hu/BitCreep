@@ -7,4 +7,6 @@ public class UploadResponse {
     public Message message;
     @SerializedName("success")
     public boolean success;
+    @SerializedName("url")
+    public String url;
 }
