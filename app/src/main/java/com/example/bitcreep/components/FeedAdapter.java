@@ -35,7 +35,7 @@ public class FeedAdapter extends RecyclerView.Adapter<FeedAdapter.VideoViewHolde
 
     @Override
     public int getItemCount() {
-        return data==null?0:data.size();
+        return data == null ? 0 : data.size();
     }
 
     public static class VideoViewHolder extends RecyclerView.ViewHolder {
