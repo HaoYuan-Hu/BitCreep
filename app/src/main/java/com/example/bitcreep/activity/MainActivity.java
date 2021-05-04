@@ -39,6 +39,7 @@ import com.example.bitcreep.utils.Constants;
 import com.example.bitcreep.utils.IApi;
 import com.example.bitcreep.utils.Message;
 import com.example.bitcreep.utils.MessageListResponse;
+import com.facebook.drawee.backends.pipeline.Fresco;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 
@@ -64,6 +65,7 @@ public class MainActivity extends AppCompatActivity {
     // 创建时初始化
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Fresco.initialize(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
@@ -113,22 +115,10 @@ public class MainActivity extends AppCompatActivity {
         api = retrofit.create(IApi.class);
     }
 
-//    // 开设新的线程，获取远端数据
-//    private void getData(String studentId){
-//        Log.d(TAG,"getData start");
-//        new Thread(new Runnable() {
-//            @Override
-//            public void run() {
-//                getMessagesFromRemote(studentId);
-//            }
-//        }).start();
-//    }
-
     // 通过 IApi 获取远端数据的逻辑，同时设置远端数据
     public void getMessagesFromRemote(String studentId){
         Log.d(TAG,"get remote messages!");
         Call<MessageListResponse> response = api.getVideos(studentId);
-        Log.d(TAG,"finish call create");
 
         response.enqueue(new Callback<MessageListResponse>() {
             @Override
@@ -141,21 +131,22 @@ public class MainActivity extends AppCompatActivity {
                     Toast.makeText(MainActivity.this,"获取成功",Toast.LENGTH_SHORT).show();
 
                     MessageListResponse messagesListRes = response.body();
-//
-//                    if (messagesListRes != null && !messagesListRes.feeds.isEmpty()){
-//                        new Handler(getMainLooper()).post(new Runnable() {
-//                            @Override
-//                            public void run() {
-//                                Log.d(TAG,"Show messages" + messagesListRes.feeds.size());
-//                                Toast.makeText(MainActivity.this, "共找到" + messagesListRes.feeds.size() + "条结果", Toast.LENGTH_SHORT).show();
-//                                adapter.setData(messagesListRes.feeds);
-//                            }
-//                        });
-//                    }
-//                    else {
-//                        Log.d(TAG,"data result can be null!");
-//                        Toast.makeText(MainActivity.this, "返回结果为空", Toast.LENGTH_SHORT).show();
-//                    }
+
+                    // 如果返回的东西不为空
+                    if (messagesListRes != null && !messagesListRes.feeds.isEmpty()){
+                        new Handler(getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d(TAG,"Show messages" + messagesListRes.feeds.size());
+                                Toast.makeText(MainActivity.this, "共找到" + messagesListRes.feeds.size() + "条结果", Toast.LENGTH_SHORT).show();
+                                adapter.setData(messagesListRes.feeds);
+                            }
+                        });
+                    }
+                    else {
+                        Log.d(TAG,"data result can be null!");
+                        Toast.makeText(MainActivity.this, "返回结果为空", Toast.LENGTH_SHORT).show();
+                    }
                 }
             }
 
@@ -168,28 +159,6 @@ public class MainActivity extends AppCompatActivity {
         });
         Log.d(TAG,"function over");
     }
-
-
-//    // 如果当前 Activity 中有子 Activity 结束，则会触发这个函数
-//    @Override
-//    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
-//        super.onActivityResult(requestCode, resultCode, data);
-//        if (REQUEST_CODE_COVER_IMAGE == requestCode) {
-//            if (resultCode == Activity.RESULT_OK) {
-//                coverImageUri = data.getData();
-//                coverSD.setImageURI(coverImageUri);
-//
-//                if (coverImageUri != null) {
-//                    Log.d(TAG, "pick cover image " + coverImageUri.toString());
-//                } else {
-//                    Log.d(TAG, "uri2File fail " + data.getData());
-//                }
-//
-//            } else {
-//                Log.d(TAG, "file pick fail");
-//            }
-//        }
-//    }
 
     public void customCamera() {
         requestPermission();
