@@ -1,5 +1,7 @@
 package com.example.bitcreep.activity;
 
+
+import androidx.annotation.Nullable;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.core.app.ActivityCompat;
@@ -7,11 +9,16 @@ import androidx.core.content.ContextCompat;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import android.Manifest;
+
+import android.app.Activity;
 import android.content.Intent;
+import android.net.Uri;
+import android.Manifest;
 import android.content.pm.PackageManager;
+
 import android.os.Bundle;
 import android.os.Handler;
+import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
 import android.widget.Toast;
@@ -28,18 +35,49 @@ import java.util.List;
 
 import com.example.bitcreep.R;
 import com.example.bitcreep.components.FeedAdapter;
+import com.example.bitcreep.utils.Constants;
+import com.example.bitcreep.utils.IApi;
+import com.example.bitcreep.utils.Message;
+import com.example.bitcreep.utils.MessageListResponse;
+import com.facebook.drawee.backends.pipeline.Fresco;
+import com.google.gson.Gson;
+import com.google.gson.reflect.TypeToken;
+
+import okhttp3.MediaType;
+import okhttp3.MultipartBody;
+import okhttp3.RequestBody;
+import retrofit2.Call;
+import retrofit2.Callback;
+import retrofit2.Response;
+import retrofit2.Retrofit;
+import retrofit2.converter.gson.GsonConverterFactory;
 
 public class MainActivity extends AppCompatActivity {
+
     private static final String TAG = "MainActivity";
     private final static int PERMISSION_REQUEST_CODE = 1001;
+
     private FeedAdapter adapter = new FeedAdapter();
 
+    private IApi api;
+    private Retrofit retrofit;
 
+    // 创建时初始化
     @Override
     protected void onCreate(Bundle savedInstanceState) {
+        Fresco.initialize(this);
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // 初始化网络接口
+        initNetwork();
+
+        // 设置滚动窗口相关
+        RecyclerView recyclerView = findViewById(R.id.video_list);
+        recyclerView.setLayoutManager(new LinearLayoutManager(this));
+        recyclerView.setAdapter(adapter);
+
+        // 设置按钮相关
         findViewById(R.id.upload_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,9 +94,70 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
+                getMessagesFromRemote(Constants.STUDENT_ID);
             }
         });
+        findViewById(R.id.getall_button).setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                getMessagesFromRemote(null);
+            }
+        });
+    }
+
+    // 初始化网络接口
+    private void initNetwork() {
+        retrofit = new Retrofit.Builder()
+                .baseUrl(Constants.BASE_URL)
+                .addConverterFactory(GsonConverterFactory.create())
+                .build();
+
+        api = retrofit.create(IApi.class);
+    }
+
+    // 通过 IApi 获取远端数据的逻辑，同时设置远端数据
+    public void getMessagesFromRemote(String studentId){
+        Log.d(TAG,"get remote messages!");
+        Call<MessageListResponse> response = api.getVideos(studentId);
+
+        response.enqueue(new Callback<MessageListResponse>() {
+            @Override
+            public void onResponse(final Call<MessageListResponse> call, final Response<MessageListResponse> response) {
+                if (!response.isSuccessful()) {
+                    Log.d(TAG,"response is not successful");
+                    Toast.makeText(MainActivity.this,"获取失败",Toast.LENGTH_SHORT).show();
+                } else {
+                    Log.d(TAG,"response is successful");
+                    Toast.makeText(MainActivity.this,"获取成功",Toast.LENGTH_SHORT).show();
+
+                    MessageListResponse messagesListRes = response.body();
+
+                    // 如果返回的东西不为空
+                    if (messagesListRes != null && !messagesListRes.feeds.isEmpty()){
+                        new Handler(getMainLooper()).post(new Runnable() {
+                            @Override
+                            public void run() {
+                                Log.d(TAG,"Show messages" + messagesListRes.feeds.size());
+                                Toast.makeText(MainActivity.this, "共找到" + messagesListRes.feeds.size() + "条结果", Toast.LENGTH_SHORT).show();
+                                adapter.setData(messagesListRes.feeds);
+                            }
+                        });
+                    }
+                    else {
+                        Log.d(TAG,"data result can be null!");
+                        Toast.makeText(MainActivity.this, "返回结果为空", Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+
+            @Override
+            public void onFailure(final Call<MessageListResponse> call, final Throwable t) {
+                Log.d(TAG,"Main Activity" + "获取失败");
+                t.printStackTrace();
+                Toast.makeText(MainActivity.this,"onFailure",Toast.LENGTH_SHORT).show();
+            }
+        });
+        Log.d(TAG,"function over");
     }
 
     public void customCamera() {

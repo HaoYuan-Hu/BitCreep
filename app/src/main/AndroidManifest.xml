@@ -23,6 +23,7 @@
         android:requestLegacyExternalStorage="true"
         android:supportsRtl="true"
         android:theme="@style/Theme.BitCreep">
+
         <activity android:name=".activity.VideoActivity">
 <!--            <intent-filter>-->
 <!--                <action android:name="android.intent.action.MAIN" />-->
@@ -32,7 +33,9 @@
         </activity>
         <activity android:name=".activity.CameraActivity"></activity>
         <activity android:name=".activity.UploadActivity" />
-        <activity android:name=".activity.MainActivity">
+
+        <activity android:name=".activity.MainActivity"
+            android:usesCleartextTraffic="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

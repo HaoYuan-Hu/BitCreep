@@ -61,21 +61,21 @@ public class VideoActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_video);
 
-//        String studentId = getIntent().getStringExtra("student_id");
-//        String userName = getIntent().getStringExtra("user_name");
-//        String videoUrl = getIntent().getStringExtra("video_url");
-//        String createTime = getIntent().getStringExtra("createdTime");
-        String studentId = "518021910095";
-        String userName = "Ke";
+        String studentId = getIntent().getStringExtra("student_id");
+        String userName = getIntent().getStringExtra("user_name");
+        String videoUrl = getIntent().getStringExtra("video_url");
+        String createTime = getIntent().getStringExtra("createdTime");
+//        String studentId = "518021910095";
+//        String userName = "Ke";
 //        String videoUrl = "https://stream7.iqilu.com/10339/upload_transcode/202002/18/20200218114723HDu3hhxqIT.mp4";
 //        String videoUrl = "https://sf3-hscdn-tos.pstatp.com/obj/developer-baas/baas/tt41nq/b79c82f2012bfc3d_1614341983449.mp4";
-        String videoUrl = "https://sf3-hscdn-tos.pstatp.com/obj/developer-baas/baas/tt41nq/41be9c2b1bc480ba_1619510654875.mp4";
-        String createTime = "2021-04-27T08:04:14.951Z";
+//        String videoUrl = "https://sf3-hscdn-tos.pstatp.com/obj/developer-baas/baas/tt41nq/41be9c2b1bc480ba_1619510654875.mp4";
+//        String createTime = "2021-04-27T08:04:14.951Z";
 
         textView = this.findViewById(R.id.text_view);
-        textView.setText("@" + userName + " (" + studentId + ")");
+        textView.setText("@" + userName.substring(6) + " (" + studentId + ")");
         timeView = this.findViewById(R.id.time_view);
-        timeView.setText(" · " + createTime.substring(0, 4) + "年"+createTime.substring(5,7) + "月"+createTime.substring(8,10) + "日");
+        timeView.setText(" · " + createTime.substring(3, 7) + "年"+createTime.substring(8, 10) + "月"+createTime.substring(11, 13) + "日");
 
         animationView = this.findViewById(R.id.animation_view);
         animationView.bringToFront();

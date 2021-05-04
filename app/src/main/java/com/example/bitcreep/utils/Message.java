@@ -20,9 +20,9 @@ public class Message {
     @SerializedName("image_h")
     private int imageH;
     @SerializedName("createdAt")
-    private Date createdAt;
+    private String createdAt;
     @SerializedName("updatedAt")
-    private Date updatedAt;
+    private String updatedAt;
 
     public void setId(String Id) {
         this.Id = Id;
@@ -73,17 +73,17 @@ public class Message {
         return imageH;
     }
 
-    public void setCreatedAt(Date createdat) {
+    public void setCreatedAt(String createdat) {
         this.createdAt = createdat;
     }
-    public Date getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 
-    public void setUpdatedAtt(Date updatedat) {
+    public void setUpdatedAt(String updatedat) {
         this.updatedAt = updatedat;
     }
-    public Date getUpdatedAt() {
+    public String getUpdatedAt() {
         return updatedAt;
     }
 
