@@ -31,6 +31,7 @@ import java.io.IOException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import com.example.bitcreep.R;
+import com.example.bitcreep.utils.Constants;
 import com.example.bitcreep.utils.PathUtils;
 
 public class CameraActivity extends AppCompatActivity implements SurfaceHolder.Callback {
@@ -148,7 +149,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             FileOutputStream fos = null;
 //            String filePath = getExternalFilesDir(Environment.DIRECTORY_PICTURES).getAbsolutePath() + File.separator + "1.jpg";
             String timeStamp = new SimpleDateFormat("yyyyMMdd_HHmmss").format(new Date());
-            String filePath = "/storage/emulated/0/Pictures/IMG_"+timeStamp+".jpg";
+            String filePath = "/storage/emulated/0/Pictures/+"+ Constants.USER_NAME+ "_"+timeStamp+".jpg";
             File file = new File(filePath);
             try {
                 fos = new FileOutputStream(file);
@@ -201,7 +202,7 @@ public class CameraActivity extends AppCompatActivity implements SurfaceHolder.C
             mVideoView.start();
         } else {
             if(prepareVideoRecorder()) {
-                mRecordButton.setText("暂停");
+                mRecordButton.setText("停止");
                 mMediaRecorder.start();
             }
         }

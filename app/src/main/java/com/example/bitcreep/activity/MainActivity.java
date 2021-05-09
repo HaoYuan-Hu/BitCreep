@@ -21,6 +21,7 @@ import android.os.Handler;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.Toast;
 
 import java.io.BufferedReader;
@@ -56,6 +57,7 @@ public class MainActivity extends AppCompatActivity {
 
     private static final String TAG = "MainActivity";
     private final static int PERMISSION_REQUEST_CODE = 1001;
+    private ImageView bd;
 
     private FeedAdapter adapter = new FeedAdapter();
 
@@ -76,6 +78,7 @@ public class MainActivity extends AppCompatActivity {
         RecyclerView recyclerView = findViewById(R.id.video_list);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
         recyclerView.setAdapter(adapter);
+        bd = findViewById(R.id.bd);
 
         // 设置按钮相关
         findViewById(R.id.upload_button).setOnClickListener(new View.OnClickListener() {
@@ -94,12 +97,15 @@ public class MainActivity extends AppCompatActivity {
         findViewById(R.id.search_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                bd.setVisibility(View.INVISIBLE);
                 getMessagesFromRemote(Constants.STUDENT_ID);
             }
         });
         findViewById(R.id.getall_button).setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+
+                bd.setVisibility(View.INVISIBLE);
                 getMessagesFromRemote(null);
             }
         });

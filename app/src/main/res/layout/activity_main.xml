@@ -3,12 +3,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
+    <ImageView
+        android:id="@+id/bd"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/bd"
+        />
+
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/video_list"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_alignParentTop="true"
         />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"

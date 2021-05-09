@@ -193,13 +193,13 @@ public class UploadActivity extends AppCompatActivity {
                         @Override
                         public void run() {
                             //todo
-                            //finish();
                             Toast.makeText(UploadActivity.this, "上传成功", Toast.LENGTH_SHORT).show();
+                            finish();
                         }
                     });
                 }
             }
-
+ 
             @Override
             public void onFailure(final Call<UploadResponse> call, final Throwable t) {
                 t.printStackTrace();
